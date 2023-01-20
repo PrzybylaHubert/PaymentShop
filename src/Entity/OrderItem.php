@@ -64,4 +64,9 @@ class OrderItem
 
         return $this;
     }
+
+    public function getTotal(): int
+    {
+        return $this->getProduct()->getPrice() * $this->getQuantity();
+    }
 }

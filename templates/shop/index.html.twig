@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ShopController!{% endblock %}
+
+{% block body %}
+    <div id='main'>
+        <div class='shop-items'>
+        {% for beer in beers %}
+            <div class='beer'>
+                <div class='beer-image'>
+                    <a href="{{ path('app_beer', {id: beer.id}) }}">
+                    <img src="{{ beer.imageUrl }}" width="100px" height="250px">
+                    </a>
+                </div>
+                <div class='beer-info'>
+                    <div class='beer-name'>
+                        Name: {{ beer.name }}
+                    </div>
+                    <hr>
+                    <div class='beer-price'>
+                        Price: {{ beer.price }} zł
+                    </div>
+                    <div class='cart-button'>
+                        Add to cart
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

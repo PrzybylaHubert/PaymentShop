@@ -16,11 +16,11 @@ class Order
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'orderRef', targetEntity: OrderItem::class, cascade: ['persist', 'remove'],orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'orderRef', targetEntity: OrderItem::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $items;
 
     #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    private ?string $status = self::STATUS_CART;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -102,5 +102,25 @@ class Order
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function truncateOrder(): self
+    {
+        foreach($this->getItems() as $item) {
+            $this->removeItem($item);
+        }
+
+        return $this;
+    }
+
+    public function getTotal(): int
+    {
+        $total = 0;
+
+        foreach($this->getItems() as $item) {
+            $total += $item->getTotal();
+        }
+
+        return $total;
     }
 }
