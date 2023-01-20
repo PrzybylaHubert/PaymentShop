@@ -11,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: '`order`')]
 class Order
 {
+    /**
+     * @var string
+     */
+    const STATUS_CART = 'cart';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

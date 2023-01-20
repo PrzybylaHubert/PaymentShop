@@ -3,5 +3,17 @@
 {% block title %}Hello ShopController!{% endblock %}
 
 {% block body %}
-
+    <div id='main'>
+        <img src="{{ beer.imageUrl }}" width="100px" height="250px">
+        <h1> {{ beer.name }} {{ beer.price }} zł </h1>
+        <hr>
+        <b>Description: </b>{{ beer.description }}
+        {{ form_start(form) }}
+            {{ form_label(form.quantity) }}
+            {{ form_widget(form.quantity) }}
+            <div class="invalid-feedback">
+                {{ form_errors(form.quantity) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
