@@ -70,6 +70,11 @@ class OrderItem
 
     public function getTotal(): int
     {
-        return $this->getProduct()->getPrice() * $this->getQuantity();
+        return $this->getBeer()->getPrice() * $this->getQuantity();
+    }
+
+    public function equals(OrderItem $item): bool
+    {
+        return $this->getBeer()->getId() === $item->getBeer()->getId();
     }
 }

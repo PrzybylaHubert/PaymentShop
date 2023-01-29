@@ -53,11 +53,18 @@ class Order
 
     public function addItem(OrderItem $item): self
     {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-            $item->setOrderRef($this);
+        foreach ($this->getItems() as $existingItem) {
+            if ($existingItem->equals($item)) {
+                $existingItem->setQuantity(
+                    $existingItem->getQuantity() + $item->getQuantity()
+                );
+                return $this;
+            }
         }
-
+    
+        $this->items[] = $item;
+        $item->setOrderRef($this);
+    
         return $this;
     }
 

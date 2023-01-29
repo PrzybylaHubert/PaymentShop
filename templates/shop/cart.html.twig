@@ -3,5 +3,52 @@
 {% block title %}Hello ShopController!{% endblock %}
 
 {% block body %}
-
+    <div id="main">
+        Your Cart
+        {% if cart.items.count > 0 %}
+                <div>
+                    {{ form_start(form) }}
+                            {{ form_widget(form.save) }}
+                            {{ form_widget(form.clear) }}
+                            {% for item in form.items %}
+                            <div class='cart-item'>
+                                <div>
+                                    <img src="{{ item.vars.data.beer.imageUrl }}" width="80px" height="200px">
+                                </div>
+                                <div>
+                                    <h5>{{ item.vars.data.beer.name }}</h5>
+                                    <small>{{ item.vars.data.beer.description }}</small>
+                                    <hr>
+                                    <div class='item-quantity'> 
+                                        <b>{{ item.vars.data.beer.price }} zł</b>
+                                        {{ form_widget(item.quantity, {
+                                            'attr': {
+                                                'class': 'form-control form-control-sm ' ~ (item.quantity.vars.valid ? '' : 'is-invalid')
+                                            }
+                                        }) }}
+                                        <div class="invalid-feedback">
+                                            {{ form_errors(item.quantity) }}
+                                        </div>
+                                        {{ form_widget(item.remove) }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {{ form_end(form) }}
+                </div>
+                <div class="summary">
+                    <h5>Summary</h5>
+                    <div><b>Total</b></div>
+                    <span><b>{{ cart.total }} zł</b></span>
+                    <div class="card-body">
+                        <a href="#" class="btn btn-warning w-100">Checkout</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                Your cart is empty. Go to the <a href="{{ path('app_shop') }}">product list</a>.
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
