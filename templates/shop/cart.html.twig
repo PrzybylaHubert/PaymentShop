@@ -21,11 +21,7 @@
                                     <hr>
                                     <div class='item-quantity'> 
                                         <b>{{ item.vars.data.beer.price }} zł</b>
-                                        {{ form_widget(item.quantity, {
-                                            'attr': {
-                                                'class': 'form-control form-control-sm ' ~ (item.quantity.vars.valid ? '' : 'is-invalid')
-                                            }
-                                        }) }}
+                                        {{ form_widget(item.quantity) }}
                                         <div class="invalid-feedback">
                                             {{ form_errors(item.quantity) }}
                                         </div>
