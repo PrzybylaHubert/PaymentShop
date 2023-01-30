@@ -135,4 +135,13 @@ class Order
 
         return $total;
     }
+
+    public function removeItems(): self
+    {
+        foreach ($this->getItems() as $item) {
+            $this->removeItem($item);
+        }
+
+        return $this;
+    }
 }

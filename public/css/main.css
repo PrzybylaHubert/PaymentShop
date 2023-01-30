@@ -8,6 +8,7 @@ body {
 #main {
     box-sizing:border-box;
     background-color:rgb(120, 90, 90);
+    width:100%;
 }
 
 #navbar {
@@ -86,4 +87,16 @@ body {
     background-color:rgb(160, 130, 130);
     height:50px;
     margin:0px;
+}
+
+.register-form {
+    padding:15px;
+}
+
+.fields {
+    background-color:rgb(160, 130, 130);
+    padding:15px;
+    text-align:center;
+    width:50%;
+    margin:auto;
 }

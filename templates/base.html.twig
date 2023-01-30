@@ -22,14 +22,18 @@
                     <a href="{{ path('app_cart') }}">Cart</a>
                 </div>
                 <div class='navbar-item'>
+                {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('app_logout') }}">Logout</a>
+                {% else %}
                     <a href="{{ path('app_login') }}">Login</a>
+                {% endif %}
                 </div>
             </div>
         {% endblock %}
         {% block body %}{% endblock %}
         {% block footer %}
             <div id='footer'>
-            siema
+                Basic footer
             </div>
         {% endblock %}
     </body>

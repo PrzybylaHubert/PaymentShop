@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RegistrationController!{% endblock %}
+
+{% block body %}
+    <div id='main'>
+        <div class='register-form'>
+            <div class='fields'>
+                {{ form_start(form) }}
+                    Username: <br>{{ form_widget(form.username) }}<br><br>
+                    Password: <br>{{ form_widget(form.password.first) }}<br><br>
+                    Repeat: <br>{{ form_widget(form.password.second) }}<br><br>
+                    {{ form_widget(form.register) }}
+                {{ form_end(form) }}
+
+                {{ form_errors(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
