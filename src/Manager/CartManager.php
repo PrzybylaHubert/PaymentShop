@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use App\Entity\User;
 use App\Entity\Order;
 use App\Factory\OrderFactory;
 use App\Storage\CartSessionStorage;
@@ -23,12 +24,18 @@ class CartManager
         $this->entityManager = $entityManager;
     }
 
-    public function getCurrentCart(): Order
+    public function getCurrentCart(?User $user): Order
     {
         $cart = $this->cartSessionStorage->getCart();
 
+        if(!$cart && $user) {
+            if($cart = $user->getCart()) {
+                $this->cartSessionStorage->setCart($cart);
+            }
+        }
+
         if (!$cart) {
-            $cart = $this->cartFactory->create();
+            $cart = $this->cartFactory->create($user);
         }
 
         return $cart;

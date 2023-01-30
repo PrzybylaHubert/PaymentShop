@@ -33,7 +33,7 @@ class ShopController extends AbstractController
             $item = $form->getData();
             $item->setBeer($beer);
 
-            $cart = $cartManager->getCurrentCart();
+            $cart = $cartManager->getCurrentCart($this->getUser());
             $cart
                 ->addItem($item)
                 ->setUpdatedAt(new \DateTimeImmutable());
@@ -52,7 +52,7 @@ class ShopController extends AbstractController
     #[Route('/cart', name: 'app_cart')]
     public function cart(CartManager $cartManager, Request $request): Response
     {
-        $cart = $cartManager->getCurrentCart();
+        $cart = $cartManager->getCurrentCart($this->getUser());
         $form = $this->createForm(CartType::class, $cart);
 
         $form->handleRequest($request);

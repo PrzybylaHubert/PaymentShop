@@ -2,19 +2,24 @@
 
 namespace App\Factory;
 
+use App\Entity\Beer;
+use App\Entity\User;
 use App\Entity\Order;
 use App\Entity\OrderItem;
-use App\Entity\Beer;
 
 class OrderFactory
 {
-    public function create(): Order
+    public function create(?User $user): Order
     {
         $order = new Order();
         $order
             ->setStatus(Order::STATUS_CART)
             ->setCreatedAt(new \DateTimeImmutable())
             ->setUpdatedAt(new \DateTimeImmutable());
+
+        if($user) {
+            $order->setUser($user);
+        }
 
         return $order;
     }

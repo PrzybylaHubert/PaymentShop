@@ -33,6 +33,9 @@ class Order
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\OneToOne(inversedBy: 'cart', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -141,6 +144,18 @@ class Order
         foreach ($this->getItems() as $item) {
             $this->removeItem($item);
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
