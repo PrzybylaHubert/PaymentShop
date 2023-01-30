@@ -80,3 +80,10 @@ body {
     padding:5px;
     box-sizing:border-box;
 }
+
+#footer {
+    width:100%;
+    background-color:rgb(160, 130, 130);
+    height:50px;
+    margin:0px;
+}
