@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Beer;
 use App\Form\CartType;
+use App\Entity\OrderItem;
 use App\Form\AddToCartType;
 use App\Manager\CartManager;
 use App\Repository\BeerRepository;
@@ -47,6 +48,23 @@ class ShopController extends AbstractController
             'beer' => $beer,
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/add/{id}', name: 'app_add_beer')]
+    public function add(Beer $beer, CartManager $cartManager): Response
+    {
+            $item = new OrderItem();
+            $item->setQuantity(1);
+            $item->setBeer($beer);
+
+            $cart = $cartManager->getCurrentCart($this->getUser());
+            $cart
+                ->addItem($item)
+                ->setUpdatedAt(new \DateTimeImmutable());
+
+            $cartManager->save($cart);
+
+            return $this->redirectToRoute('app_shop');
     }
 
     #[Route('/cart', name: 'app_cart')]

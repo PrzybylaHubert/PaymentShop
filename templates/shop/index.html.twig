@@ -20,9 +20,11 @@
                     <div class='beer-price'>
                         Price: {{ beer.price }} zł
                     </div>
-                    <div class='cart-button'>
-                        Add to cart
-                    </div>
+                    <a class='add-button' href="{{ path('app_add_beer', {id: beer.id}) }}">
+                        <div class='cart-button'>
+                            Add to cart
+                        </div>
+                    </a>
                 </div>
             </div>
         {% endfor %}

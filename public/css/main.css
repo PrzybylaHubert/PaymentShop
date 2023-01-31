@@ -100,3 +100,12 @@ body {
     width:50%;
     margin:auto;
 }
+
+.add-button {
+    text-decoration: none;
+    color:black;
+}
+
+.cart-button:hover {
+    background-color: rgb(230, 130, 130);
+}
