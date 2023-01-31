@@ -7,6 +7,8 @@ use App\Form\CartType;
 use App\Entity\OrderItem;
 use App\Form\AddToCartType;
 use App\Manager\CartManager;
+use App\Service\PaymentService;
+use App\Form\CheckoutSubmitType;
 use App\Repository\BeerRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,12 +70,22 @@ class ShopController extends AbstractController
     }
 
     #[Route('/cart', name: 'app_cart')]
-    public function cart(CartManager $cartManager, Request $request): Response
+    public function cart(CartManager $cartManager, Request $request, PaymentService $paymentService): Response
     {
         $cart = $cartManager->getCurrentCart($this->getUser());
-        $form = $this->createForm(CartType::class, $cart);
 
+        $form = $this->createForm(CartType::class, $cart);
         $form->handleRequest($request);
+
+        $checkoutForm = $this->createForm(CheckoutSubmitType::class);
+        $checkoutForm->handleRequest($request);
+
+        if ($checkoutForm->isSubmitted() && $checkoutForm->isValid()) {
+            $priceString = sprintf("%s", $cart->getTotal());
+            $test = $paymentService->getOrderedParameters($cart->getTotal());
+
+            return $this->redirect("https://ssl.dotpay.pl/test_payment/?id=$test[id]&amount=$test[amount]&currency=$test[currency]&description=$test[description]&chk=$test[chk]&lang=$test[lang]");
+        }
         
         if ($form->isSubmitted() && $form->isValid()) {
             $cart->setUpdatedAt(new \DateTimeImmutable());
@@ -84,7 +96,8 @@ class ShopController extends AbstractController
 
         return $this->render('shop/cart.html.twig', [
             'cart' => $cart,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'checkout' => $checkoutForm->createView()
         ]);
     }
 }
